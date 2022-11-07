@@ -100,21 +100,32 @@ class Widget(QWidget):
 
     def start(self):
         args = {
-        'image': None,
-        'video': "C:\\Users\\harsh.bagadia\\Downloads\\vid.mp4",
-        'camera': "true",
-        'output' : 'C:\\Users\\harsh.bagadia\\Downloads\\vid-output.mp4'
+        'image': self.inputFileLocationText.text() if self.imageRadioButton.isChecked() else None,
+        'video': self.inputFileLocationText.text() if self.videoRadioButton.isChecked() else None,
+        'camera': self.cameraRadioButton.isChecked(),
+        'output' : self.outputFilePath
         }
         self.humanDetector(args)
 
-    def openFileBrowse(self):
-        self.inputFilePath = str(QFileDialog.getOpenFileName(self,
-        "Open Image", "C:\\", "Image Files (*.png *.jpg *.bmp);; All files (*.*)"))
+    def openInputFileBrowse(self):
+        if self.imageRadioButton.isChecked():
+            self.inputFilePath = str(QFileDialog.getOpenFileName(self,
+            "Open Image", "C:\\", "Image Files (*.png *.jpg *.bmp);; All files (*.*)"))
+        else:
+            self.inputFilePath = str(QFileDialog.getOpenFileName(self,
+            "Open Video", "C:\\", "Video Files (*.mp4);; All files (*.*)"))
+
         self.inputFileLocationText.setText(self.inputFilePath.split(",")[0].replace("(", "").replace("'", "").strip())
+
+    def openOutputFileBrowse(self):
+        self.outputFilePath = str(QFileDialog.getOpenFileName(self,
+        "Select", "C:\\", "All files (*.*)"))
+        self.outputFileLocationText.setText(self.outputFilePath.split(",")[0].replace("(", "").replace("'", "").strip())
 
 
     def __init__(self, parent=None):
         self.inputFilePath = None
+        self.outputFilePath = None
 
         super().__init__(parent)
         self.loadUi();
@@ -124,14 +135,19 @@ class Widget(QWidget):
         self.videoRadioButton = self.findChild(QRadioButton, "videoRadioButton")
         self.cameraRadioButton = self.findChild(QRadioButton, "cameraRadioButton")
         self.inputBrowseButton = self.findChild(QPushButton, "inputBrowseButton")
+        self.outputBrowseButton = self.findChild(QPushButton, "outputBrowseButton")
         self.startButton = self.findChild(QPushButton, "startButton")
         self.inputFileLocationText = self.findChild(QLineEdit, "inputFileLocationText")
-
+        self.outputFileLocationText = self.findChild(QLineEdit, "outputFileLocationText")
+        self.videoRadioButton.setChecked(True);
         self.startButton.setEnabled(True)
         self.startButton.clicked.connect(self.start)
 
-        self.inputBrowseButton.clicked.connect(self.openFileBrowse)
+        self.inputBrowseButton.clicked.connect(self.openInputFileBrowse)
         self.inputFileLocationText.setText(self.inputFilePath)
+
+        self.outputBrowseButton.clicked.connect(self.openOutputFileBrowse)
+        self.outputFileLocationText.setText(self.outputFilePath)
 
     def loadUi(self):
         loader = QUiLoader()

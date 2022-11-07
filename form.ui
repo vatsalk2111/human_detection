@@ -52,7 +52,7 @@
     </rect>
    </property>
    <property name="title">
-    <string>GroupBox</string>
+    <string/>
    </property>
    <widget class="QLabel" name="source">
     <property name="geometry">
@@ -79,6 +79,9 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QRadioButton" name="imageRadioButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Image</string>
        </property>
@@ -114,7 +117,7 @@
     </rect>
    </property>
    <property name="title">
-    <string>GroupBox</string>
+    <string/>
    </property>
    <widget class="QLabel" name="inputFile">
     <property name="geometry">
@@ -169,7 +172,7 @@
     </rect>
    </property>
    <property name="title">
-    <string>GroupBox</string>
+    <string/>
    </property>
    <widget class="QLabel" name="outputFile">
     <property name="geometry">
@@ -185,6 +188,9 @@
     </property>
    </widget>
    <widget class="QLineEdit" name="outputFileLocationText">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>90</x>
@@ -195,6 +201,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="outputBrowseButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>340</x>
